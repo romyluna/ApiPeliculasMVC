@@ -1,0 +1,52 @@
+﻿@model PeliculasWeb.Models.Categoria //ponemos para que sepa sobre que modelo va a trabajar
+@{
+    ViewData["Title"] = "Editar Categoria";
+}
+
+<!--codigo HTML-->
+
+<div class="container p-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-primary">Editar una categoría</h2>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="post" asp-action="Update">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Nombre"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary form-control">Editar Categoría</button>
+                    </div>
+
+                    <div class="col">
+                        <a asp-action="Index">Volver</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

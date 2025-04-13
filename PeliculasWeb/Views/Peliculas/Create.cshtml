@@ -1,0 +1,90 @@
+﻿@model PeliculasWeb.Models.ViewModels.PeliculasVM //ponemos para que sepa sobre que modelo va a trabajar : EN EL DE PELICULASVM.
+
+@{
+    ViewData["Title"] = "Crear Nueva Pelicula";
+}
+
+<!--codigo HTML-->
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-8">
+            <h2 class="text-primary">
+                Crear Nueva Pelicula
+            </h2>
+        </div>
+        <div class="col-4 text-end">
+            <a asp-action="Create" class="btn btn-success text-white">
+                <i class="fas fa-plus"></i>Crear Nueva Pelicula
+            </a>
+        </div>
+    </div>
+
+    <!--para crear el formulario -->
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="post" asp-action="Create">
+                <!--si yo en el modelo puse required algun campo esta linea de codigo valida que se cumpla con eso-->
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Pelicula.Nombre" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <input asp-for="Pelicula.Nombre" class="form-control" placeholder="Ingrese el nombre de la Pelicula" />
+                        <span asp-validation-for="Pelicula.Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Pelicula.Descripcion" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <input asp-for="Pelicula.Descripcion" class="form-control" placeholder="Ingrese la Descripcion" />
+                        <span asp-validation-for="Pelicula.Descripcion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Pelicula.Clasificacion" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <Select asp-for="Pelicula.Clasificacion" asp-items="Html.GetEnumSelectList<Pelicula.TipoClasificacion>()" class=" ="form-control"></Select>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Pelicula.Duracion" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <input asp-for="Pelicula.Duracion" class="form-control" placeholder="Ingrese la Duracion" />
+                        <span asp-validation-for="Pelicula.Duracion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--CARGA LA LISTA DE CATEGORIAS -->
+                <div class="form-group row mb-3">
+                    <label for="Categoria" class="col-4 col-form-label">Categoria</label>
+                    <div class="col-8">
+                        @Html.DropDownListFor(c => c.Pelicula.categoriaId, Model.ListaCategorias,
+                            "-por favor selecciona la categoria",
+                        new {@class = "form-control"})
+                        <span asp-validation-for="Pelicula.categoriaId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary form-control">Crear Pelicula</button>
+                    </div>
+
+                    <!--boton para ir atras-->
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-secondary w-100 ">
+                            <i class="fas fa-arrow-left">Volver</i>
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>

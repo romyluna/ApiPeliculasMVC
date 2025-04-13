@@ -15,7 +15,7 @@ namespace PeliculasWeb.Repositorio
 
         public PeliculaRepositorio(IHttpClientFactory clientFactory) : base(clientFactory)
         {
-           
+            _clientFactory = clientFactory;
         }
 
         //copie y pegue todo el metodo desde repositorio getTodoAsync y le cambie el nombre 

@@ -61,6 +61,53 @@ namespace PeliculasWeb.Controllers
             return View(objVM);
         }
 
+        [HttpPost]
+        //para protegerse de ataques CSRF (Cross-Site Request Forgery).Esto ayuda a garantizar que las solicitudes POST
+        //(como enviar formularios) sean legítimas y no generadas maliciosamente desde otro lugar
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Pelicula pelicula)
+        {
+            //para crear una pelicula necesitamos asignarle una categoria:una lista desplegable con las categorias que hay.
+            IEnumerable<Categoria> ctList = (IEnumerable<Categoria>)await 
+                _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi); //casteo ienumerable
+
+            //PeliculasVM es un ViewModel que combina dos cosas: una lista de categorías (listaCategorias)
+            //para mostrar en un control desplegable y un objeto Pelicula que representa los datos de una película
+
+            PeliculasVM objVM = new PeliculasVM()
+            {
+
+                //traigo la lista de categorias aca:
+
+                ListaCategorias = ctList.Select(i => new SelectListItem
+                {
+                    Text = i.Nombre,
+                    Value = i.Id.ToString()
+                }),
+
+                //traigo los datos de pelicula
+                Pelicula = new Pelicula()
+            };
+
+            if (ModelState.IsValid)
+            {
+                //con esto obtengo los archivos subidos desde el formulario 
+                var files = HttpContext.Request.Form.Files;
+                //si se ah subido algun archivo:
+                if (files.Count > 0) 
+                {
+                    pelicula.Imagen = files[0];//asignar el iformFile directamente a la propiedad imagen
+                }
+                else
+                {
+                    return View(objVM);
+                }
+             
+                await _repoPelicula.CrearPeliculaAsync(CT.RutaPeliculasApi,pelicula);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(objVM);
+        }
 
     }
 }

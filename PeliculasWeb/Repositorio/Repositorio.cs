@@ -235,7 +235,7 @@ namespace PeliculasWeb.Repositorio
                             {
                                 var streamContent = new StreamContent(file.OpenReadStream());
                                 streamContent.Headers.ContentType =
-                                    new System.Net.Http.Headers.MediaTypeHeaderValue("File.ContentType");
+                                    new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
 
                                 //enviamos todo el contenido como multipartcontent
 

@@ -17,7 +17,7 @@ namespace PeliculasWeb.Models
         public string Descripcion { get; set; }
         public string Duracion { get; set; }
 
-        public IFormFile Image { get; set; } //este lo agrego es el que nos va a permitir subir la imagen de la pelicula
+        public IFormFile Imagen { get; set; } //este lo agrego es el que nos va a permitir subir la imagen de la pelicula permitiendo que un archivo se suba desde un formulario HTML
         //public string? RutaLocalIMagen { get; set; } la volo
         public string? RutaIMagen { get; set; }
 

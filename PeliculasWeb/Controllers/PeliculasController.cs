@@ -68,8 +68,58 @@ namespace PeliculasWeb.Controllers
         public async Task<IActionResult> Create(Pelicula pelicula)
         {
             //para crear una pelicula necesitamos asignarle una categoria:una lista desplegable con las categorias que hay.
+            // Obtengo la lista de categorías desde un repositorio 
             IEnumerable<Categoria> ctList = (IEnumerable<Categoria>)await 
                 _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi); //casteo ienumerable
+
+            //Creo un ViewModel (PeliculasVM) que combina la lista de categorías con los datos de la película
+            PeliculasVM objVM = new PeliculasVM()
+            {
+
+                //traigo la lista de categorias aca:// Lista de categorías para mostrar en un dropdown
+
+                ListaCategorias = ctList.Select(i => new SelectListItem
+                {
+                    Text = i.Nombre,
+                    Value = i.Id.ToString()
+                }),
+
+                //traigo los datos de pelicula que se está creando (inicialmente vacía)
+                Pelicula = new Pelicula()
+            };
+
+           // Compruebo si el modelo recibido es válido según las validaciones definidas en el modelo Pelicula
+            if (ModelState.IsValid)
+            {
+                //con esto obtengo los archivos subidos desde el formulario 
+                var files = HttpContext.Request.Form.Files;
+                //si se ah subido algun archivo:
+                if (files.Count > 0) 
+                {
+                    pelicula.Imagen = files[0];//asignar el iformFile directamente a la propiedad imagen
+                }
+                else
+                {
+                    // Si no se ha subido ningún archivo, retorno la vista con el ViewModel para que el usuario complete los datos
+                    return View(objVM);
+                }
+                //Llamo al repositorio para crear la película en la API correspondiente
+                await _repoPelicula.CrearPeliculaAsync(CT.RutaPeliculasApi,pelicula);
+                // Redirigir al usuario a la acción Index después de crear exitosamente la película
+                return RedirectToAction(nameof(Index));
+            }
+            // Si el modelo no es válido, retorno la vista con el ViewModel para que el usuario corrija los errores
+            return View(objVM);
+        }
+
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            //para crear una pelicula necesitamos asignarle una categoria:una lista desplegable con las categorias que hay.
+            IEnumerable<Categoria> ctList = (IEnumerable<Categoria>)await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi); //casteo ienumerable
 
             //PeliculasVM es un ViewModel que combina dos cosas: una lista de categorías (listaCategorias)
             //para mostrar en un control desplegable y un objeto Pelicula que representa los datos de una película
@@ -89,25 +139,31 @@ namespace PeliculasWeb.Controllers
                 Pelicula = new Pelicula()
             };
 
-            if (ModelState.IsValid)
+            if( id == null)
             {
-                //con esto obtengo los archivos subidos desde el formulario 
-                var files = HttpContext.Request.Form.Files;
-                //si se ah subido algun archivo:
-                if (files.Count > 0) 
-                {
-                    pelicula.Imagen = files[0];//asignar el iformFile directamente a la propiedad imagen
-                }
-                else
-                {
-                    return View(objVM);
-                }
-             
-                await _repoPelicula.CrearPeliculaAsync(CT.RutaPeliculasApi,pelicula);
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
+
+            //si se envia un id para mostrar los datos del formulario
+
+            objVM.Pelicula = await _repoPelicula.GetAsync(CT.RutaPeliculasApi,id.GetValueOrDefault());
+
+
             return View(objVM);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

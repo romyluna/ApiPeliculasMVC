@@ -8,5 +8,8 @@
         public static string RutaUsuariosApi = UrlBaseApi + "api/v1/Usuarios/";
 
         //faltan otras rutas para buscar y filtrar pelis por categoria
+        public static string RutaPeliculasEnCategoriaApi = UrlBaseApi + "api/Peliculas/GetPeliculasEnCategoria/";
+
+
     }
 }

@@ -13,18 +13,19 @@
                 Editar Pelicula
             </h2>
         </div>
+<!--
         <div class="col-4 text-end">
             <a asp-action="Create" class="btn btn-success text-white">
                 <i class="fas fa-plus"></i>Editar Pelicula
             </a>
         </div>
     </div>
-
+ -->
     <!--para crear el formulario -->
     <div class="row">
         <div class="col-sm-12">
-            <form method="post" asp-action="Update" enctype="multipart/form-data">
-
+                <form method="POST" asp-action="Update" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <!--para enviar el ID de la pelicula de manera oculta para que no se vea en el formulario-->
 

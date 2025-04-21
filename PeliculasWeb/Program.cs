@@ -23,9 +23,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         //tiempo de expiracion
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         // Especifica la ruta donde el usuario será redirigido si intenta acceder a una página protegida sin autenticarse previamente
-        options.LoginPath = "Home/Login";
+        options.LoginPath = "/Home/Login";
         //Define la ruta a la cual se redirigirá al usuario si intenta acceder a recursos para los cuales no tiene permiso
-        options.AccessDeniedPath = "Home/AccessDenied";
+        options.AccessDeniedPath = "/Home/AccessDenied";
         //si el usuario esta activo y pasaron los 20 minutos se extiende el uso 20 minutos mas y asi... para que no lo saque de la pagina 
         options.SlidingExpiration = true;
     }
@@ -38,6 +38,9 @@ builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
 builder.Services.AddScoped<IPeliculaRepositorio, PeliculaRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IAccountRepositorio, AccountRepositorio>();
+
+//se debe registrar este para que el HTTPCONTEXTACCESOR que esta en _Layout funcione->PARA ACCESO LOGIN Y REGISTRO
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 //agregar sesion (Autenticacion) 
 //la información de la sesión se guarda en el servidor.

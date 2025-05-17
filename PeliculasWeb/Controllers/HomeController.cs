@@ -67,6 +67,29 @@ namespace PeliculasWeb.Controllers
             }
         }
 
+        /*REGISTRO A NUESTRA PAGINA*/
+
+        [HttpGet]
+        public IActionResult Registro() //Agrego vista de razor vacia a Registro.-- en la carpeta home crea la nueva vista -- REGISTRO.
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //para proteccion de ataques xss
+        public async Task<IActionResult> Registro(UsuarioAuth obj) 
+        {
+            bool result = await _accRepo.RegisterAsync(CT.RutaUsuariosApi + "Registro", obj);
+            if(result == false)
+            {
+                return View();
+            }
+            TempData["alert"] = "Registro Correcto";
+            return RedirectToAction("Login");
+            
+        }
+
+
         public IActionResult Privacy()
         {
             return View();

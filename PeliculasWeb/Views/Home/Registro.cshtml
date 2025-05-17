@@ -1,0 +1,53 @@
+﻿@model PeliculasWeb.Models.UsuarioAuth //ponemos para que sepa sobre que modelo va a trabajar
+@{
+    ViewData["Title"] = "Registro de Usuarios";
+}
+
+<h1 class="text-center">Registro de Usuarios</h1>
+
+<div class="row mt-4">
+  
+</div>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <form method="POST" asp-action="Registro">
+            <!--si yo en el modelo puse required algun campo esta linea de codigo valida que se cumpla con eso-->
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group row mb-3">
+                <label for="Usuario" class="col-4 col-form-label">Usuario:</label>
+                <div class="col-8">
+                    <input asp-for="NombreUsuario" class="form-control" placeholder="Ingresa el nombre de Usuario" />
+                    <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="Nombre" class="col-4 col-form-label">Nombre:</label>
+                <div class="col-8">
+                    <input asp-for="Nombre" class="form-control" placeholder="Ingresa el nombre completo" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="Password" class="col-4 col-form-label">Password:</label>
+                <div class="col-8">
+                    <input type="Password" asp-for="Password" class="form-control" placeholder="Ingresa el Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-user-plus">  Registrar</i>
+            </button>
+
+
+        </form>
+    </div>
+
+
+
+</div>

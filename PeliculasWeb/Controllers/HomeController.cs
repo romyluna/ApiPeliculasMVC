@@ -75,6 +75,8 @@ namespace PeliculasWeb.Controllers
             return View();
         }
 
+        /*funcionalidad de CIERRE DE LOGOUT DE LA SESION*/
+
         [HttpPost]
         [ValidateAntiForgeryToken] //para proteccion de ataques xss
         public async Task<IActionResult> Registro(UsuarioAuth obj) 
@@ -87,6 +89,25 @@ namespace PeliculasWeb.Controllers
             TempData["alert"] = "Registro Correcto";
             return RedirectToAction("Login");
             
+        }
+
+        [HttpGet]
+        public async Task <IActionResult> Logout()
+        {
+            //cierra la sesion de autenticacion
+            await HttpContext.SignOutAsync();
+
+            //limpiar la sesion del usuario
+            HttpContext.Session.Clear();
+
+            //eliminar la cookie de session manualmente
+
+            if(Request.Cookies.ContainsKey(".AspNetCore.Session"))
+            {
+                Response.Cookies.Delete(".AspNetCore.Session");
+            }
+
+            return RedirectToAction("Index");
         }
 
 

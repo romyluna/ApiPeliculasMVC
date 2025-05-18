@@ -105,7 +105,7 @@ namespace PeliculasWeb.Controllers
                     return View(objVM);
                 }
                 //Llamo al repositorio para crear la película en la API correspondiente
-                await _repoPelicula.CrearPeliculaAsync(CT.RutaPeliculasApi,pelicula);
+                await _repoPelicula.CrearPeliculaAsync(CT.RutaPeliculasApi,pelicula, HttpContext.Session.GetString("JWToken"));
                 // Redirigir al usuario a la acción Index después de crear exitosamente la película
                 return RedirectToAction(nameof(Index));
             }
@@ -202,7 +202,7 @@ namespace PeliculasWeb.Controllers
                     return View(objVM);
                 }
                 //Llamo al repositorio para crear la película en la API correspondiente
-                await _repoPelicula.ActualizarPeliculaAsync(CT.RutaPeliculasApi + pelicula.Id, pelicula);
+                await _repoPelicula.ActualizarPeliculaAsync(CT.RutaPeliculasApi + pelicula.Id, pelicula, HttpContext.Session.GetString("JWToken"));
                 // Redirigir al usuario a la acción Index después de crear exitosamente la película
                 return RedirectToAction(nameof(Index));
             }
@@ -218,7 +218,7 @@ namespace PeliculasWeb.Controllers
         // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var status = await _repoPelicula.BorrarAsync(CT.RutaPeliculasApi, id);
+            var status = await _repoPelicula.BorrarAsync(CT.RutaPeliculasApi, id, HttpContext.Session.GetString("JWToken"));
 
             //si hay status si se pudo borrar 
             if (status)

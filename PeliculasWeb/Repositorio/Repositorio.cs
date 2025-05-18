@@ -27,7 +27,7 @@ namespace PeliculasWeb.Repositorio
         }
 
         //este metodo actualizar sirve solo para categorias/usuarios (no contiene subida de archivos)
-        public async Task <bool> ActualizarAsync(string url, T itemActualizar)
+        public async Task <bool> ActualizarAsync(string url, T itemActualizar, string token) //agrego el string token x la autenticacion
         {
             var peticion = new HttpRequestMessage(HttpMethod.Patch, url); //creo una solicitud HTTP que le voy a enviar a la api
             if (itemActualizar != null) //reviso que los datos que vamos a enviar no sean nulos
@@ -43,9 +43,18 @@ namespace PeliculasWeb.Repositorio
                 return false; //si esta vacio el itemactualizar devuelve falso.
             }
 
-            //envia la solicitud a la api
-
+            //AQUI VALIDA EL TOKEN: antes de enviar la peticion tengo que autenticar si el usuario es valido (si tiene permisos) para hacer esta peticion:
             var cliente = _ClientFactory.CreateClient();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                //si entra aca deja de ejecutarse
+                return false;
+            }
+            //como si existe el token entonces:asigna el token al encabezado de autorizacion
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            //envia la solicitud a la api
             HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
             //validar si se actualizo y retorna un boleano
@@ -61,7 +70,7 @@ namespace PeliculasWeb.Repositorio
         }
 
         //este metodo actualizar es solo para las peliculas ya que se sube informacion + imagen (Archivo)
-        public async Task<bool> ActualizarPeliculaAsync(string url, T peliculaActualizar)
+        public async Task<bool> ActualizarPeliculaAsync(string url, T peliculaActualizar, string token)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Patch, url); //creo una solicitud HTTP que le voy a enviar a la api
 
@@ -111,10 +120,23 @@ namespace PeliculasWeb.Repositorio
                 return false; //si esta vacio el peliculaActualizar devuelve falso.
             }
 
-            //envia la solicitud a la api
-            peticion.Content = multipartContent;
+           
+           
             var cliente = _ClientFactory.CreateClient();
 
+            //AQUI VALIDA EL TOKEN: antes de enviar la peticion tengo que autenticar si el usuario es valido (si tiene permisos) para hacer esta peticion:
+
+            if (string.IsNullOrEmpty(token))
+            {
+                //si entra aca deja de ejecutarse
+                return false;
+            }
+            //como si existe el token entonces:asigna el token al encabezado de autorizacion
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+
+            //envia la solicitud a la api
+            peticion.Content = multipartContent;
             HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
             //validar si se actualizo y retorna un booleano
@@ -129,13 +151,25 @@ namespace PeliculasWeb.Repositorio
             }
         }
 
-        public async Task<bool> BorrarAsync(string url, int id)
+        public async Task<bool> BorrarAsync(string url, int id, string token)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Delete, url + id); //creo una solicitud HTTP que le voy a enviar a la api
             
-            //envia la solicitud a la api
-
+       
             var cliente = _ClientFactory.CreateClient();
+            
+
+            //AQUI VALIDA EL TOKEN: antes de enviar la peticion tengo que autenticar si el usuario es valido (si tiene permisos) para hacer esta peticion:
+
+            if (string.IsNullOrEmpty(token))
+            {
+                //si entra aca deja de ejecutarse
+                return false;
+            }
+            //como si existe el token entonces:asigna el token al encabezado de autorizacion
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            //envia la solicitud a la api
             HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
             //validar si se actualizo y retorna un boleano
@@ -177,7 +211,7 @@ namespace PeliculasWeb.Repositorio
         }
 
         //crear una nueva categoria-usuario (NO PELICULA)
-        public async Task<bool> CrearAsync(string url, T itemCrear)
+        public async Task<bool> CrearAsync(string url, T itemCrear, string token)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Post, url); //creo una solicitud HTTP que le voy a enviar a la api
             if (itemCrear != null) //reviso que los datos que vamos a enviar no sean nulos
@@ -190,9 +224,19 @@ namespace PeliculasWeb.Repositorio
                 return false; //si esta vacio el itemactualizar devuelve falso.
             }
 
-            //envia la solicitud a la api
-
             var cliente = _ClientFactory.CreateClient();
+
+            //AQUI VALIDA EL TOKEN: antes de enviar la peticion tengo que autenticar si el usuario es valido (si tiene permisos) para hacer esta peticion:
+
+            if (string.IsNullOrEmpty(token))
+            {
+                //si entra aca deja de ejecutarse
+                return false;
+            }
+            //como si existe el token entonces:asigna el token al encabezado de autorizacion
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            //envia la solicitud a la api
             HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
             //validar si se actualizo y retorna un boleano
@@ -207,7 +251,7 @@ namespace PeliculasWeb.Repositorio
             }
         }
 
-        public async Task<bool> CrearPeliculaAsync(string url, T peliculaCrear)
+        public async Task<bool> CrearPeliculaAsync(string url, T peliculaCrear, string token)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Post, url); //creo una solicitud HTTP que le voy a enviar a la api
 
@@ -256,12 +300,23 @@ namespace PeliculasWeb.Repositorio
             {
                 return false; //si esta vacio el peliculaActualizar devuelve falso.
             }
+            
+            var cliente = _ClientFactory.CreateClient();
+
+            //AQUI VALIDA EL TOKEN: antes de enviar la peticion tengo que autenticar si el usuario es valido (si tiene permisos) para hacer esta peticion:
+
+            if (string.IsNullOrEmpty(token))
+            {
+                //si entra aca deja de ejecutarse
+                return false;
+            }
+            //como si existe el token entonces:asigna el token al encabezado de autorizacion
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             //envia la solicitud a la api
             peticion.Content = multipartContent;
-            var cliente = _ClientFactory.CreateClient();
-
             HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
+
 
             //validar si se actualizo y retorna un booleano
 
@@ -275,7 +330,7 @@ namespace PeliculasWeb.Repositorio
             }
         }
 
-        //ger por id
+        //GET POR ID
         public async Task<T> GetAsync(string url, int id)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Get, url + id); //creo una solicitud HTTP que le voy a enviar a la api SUMO EL ID PARA QUE SE PASE POR LA PETICION 

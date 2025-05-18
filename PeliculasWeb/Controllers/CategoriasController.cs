@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using PeliculasWeb.Models;
 using PeliculasWeb.Repositorio.IRepositorio;
@@ -6,9 +7,11 @@ using PeliculasWeb.Utilidades;
 
 namespace PeliculasWeb.Controllers
 {
+    
     public class CategoriasController : Controller
     {
 
+        //instanciamos para poder acceder a todos los metodos
         //instanciamos para poder acceder a todos los metodos
 
         private readonly ICategoriaRepositorio _repoCategoria; //lo llamo _repoCategoria
@@ -44,7 +47,8 @@ namespace PeliculasWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await _repoCategoria.CrearAsync(CT.RutaCategoriasApi, categoria);//le manda a la api la url y el objeto categoria del formulario
+                    //HttpContext.Session.GetString("JWToken")
+                    await _repoCategoria.CrearAsync(CT.RutaCategoriasApi, categoria, HttpContext.Session.GetString("JWToken"));//le manda a la api la url y el objeto categoria del formulario
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -89,7 +93,7 @@ namespace PeliculasWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await _repoCategoria.ActualizarAsync(CT.RutaCategoriasApi + categoria.Id ,categoria);//le manda a la api la url y el objeto categoria del formulario
+                    await _repoCategoria.ActualizarAsync(CT.RutaCategoriasApi + categoria.Id ,categoria, HttpContext.Session.GetString("JWToken"));//le manda a la api la url y el objeto categoria del formulario
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -103,7 +107,7 @@ namespace PeliculasWeb.Controllers
        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id) 
         {
-            var status = await _repoCategoria.BorrarAsync(CT.RutaCategoriasApi,id);
+            var status = await _repoCategoria.BorrarAsync(CT.RutaCategoriasApi,id, HttpContext.Session.GetString("JWToken"));
 
             //si hay status si se pudo borrar 
             if (status)

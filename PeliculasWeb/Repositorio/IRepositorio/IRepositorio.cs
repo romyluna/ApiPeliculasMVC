@@ -22,14 +22,14 @@ namespace PeliculasWeb.Repositorio.IRepositorio
 
         //metodo que no hace uso de subida de archivos (como peliculas por eso lo aperturo despues en el siguiente a pelicula
         //aca seria para categorias/usuarios
-        Task<bool> CrearAsync(string url, T itemCrear);
-        Task<bool> CrearPeliculaAsync(string url, T peliculaCrear);
+        Task<bool> CrearAsync(string url, T itemCrear ,string token);//creo una variable que se llame token en lo que no quiero que vea cualquier persona sino que este autenticada 
+        Task<bool> CrearPeliculaAsync(string url, T peliculaCrear, string token);//creo una variable que se llame token en lo que no quiero que vea cualquier persona sino que este autenticada 
 
         //para actualizar usuarios/categorias
-        Task<bool> ActualizarAsync(string url, T itemActualizar);
+        Task<bool> ActualizarAsync(string url, T itemActualizar, string token);//creo una variable que se llame token en lo que no quiero que vea cualquier persona sino que este autenticada 
 
         //para actualizar peliculas (aparte por lo de la subida de archivos q el anterior no tiene)
-        Task<bool> ActualizarPeliculaAsync(string url, T peliculaActualizar);
-        Task<bool> BorrarAsync(string url, int id);
+        Task<bool> ActualizarPeliculaAsync(string url, T peliculaActualizar, string token);//creo una variable que se llame token en lo que no quiero que vea cualquier persona sino que este autenticada 
+        Task<bool> BorrarAsync(string url, int id, string token);//creo una variable que se llame token en lo que no quiero que vea cualquier persona sino que este autenticada 
     }
 }

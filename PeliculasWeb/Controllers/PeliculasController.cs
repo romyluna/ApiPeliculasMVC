@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PeliculasWeb.Models;
 using PeliculasWeb.Models.ViewModels;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 
 namespace PeliculasWeb.Controllers
 {
+    [Authorize]
     public class PeliculasController : Controller
     {
 

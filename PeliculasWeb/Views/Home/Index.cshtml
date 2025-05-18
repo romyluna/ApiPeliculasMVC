@@ -1,8 +1,40 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PeliculasWeb.Models.ViewModels.IndexVM
+
+@{
+    ViewData["Title"] = "Página de Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!--Lista de peliculas-->
+
+<div class="row mt-3">
+    @if (Model.ListaPeliculas?.Count() > 0)
+    { 
+        @foreach(var pelicula in Model.ListaPeliculas)
+        {
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(pelicula.RutaIMagen))
+                    {
+                        <img src="@pelicula.RutaIMagen" class="card-img-top img-fluid" />
+                    }
+                    else
+                    {
+                        <img src="~/imagenes/default-image.jpg" class="card-img-top img-fluid" /> <!-- Imagen por defecto si no hay imagen -->
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@pelicula.Nombre</h5>
+                        <p class="card-text">Duración: @pelicula.Duracion</p>
+                        <p class="card-text">Clasificación: @pelicula.Clasificacion</p>
+                        <p class="card-text">Fecha de creación: @pelicula.FechaCreacion?.ToString("dd/MM/yyyy")</p>
+                        <p class="card-text">@pelicula.Descripcion</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>no hay pelicula para mostrar</p>
+    }
+
 </div>

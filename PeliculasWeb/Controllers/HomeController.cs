@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using PeliculasWeb.Models.ViewModels;
 
 
 namespace PeliculasWeb.Controllers
@@ -17,16 +18,27 @@ namespace PeliculasWeb.Controllers
         //instanciamos para poder acceder a todos los metodos
 
         private readonly IAccountRepositorio _accRepo; //lo llamo _accRepo
+        private readonly ICategoriaRepositorio _repoCategoria;
+        private readonly IPeliculaRepositorio _repoPelicula; //lo llamo _repoPelicula
 
-        public HomeController(IAccountRepositorio accRepo/*ILogger<HomeController> logger*/)
+        public HomeController(IAccountRepositorio accRepo, ICategoriaRepositorio repoCategoria, IPeliculaRepositorio repoPelicula/*ILogger<HomeController> logger*/)
         {
             //_logger = logger;
             _accRepo = accRepo;
+            _repoCategoria = repoCategoria;
+            _repoPelicula = repoPelicula;
         }
 
-        public IActionResult Index()
+        //para la visualizacion del index(HOME) : trayendo peliculas y categorias en la vista de cualquier usuario.
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IndexVM listaPeliculasCategorias = new IndexVM()
+            {
+                ListaCategorias = (IEnumerable<Categoria>) await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi),
+                ListaPeliculas = (IEnumerable<Pelicula>)await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi),
+            };
+            return View(listaPeliculasCategorias);
         }
 
         /*LOGIN*/

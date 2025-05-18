@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PeliculasWeb.Models;
 using PeliculasWeb.Repositorio.IRepositorio;
 using PeliculasWeb.Utilidades;
 
 namespace PeliculasWeb.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
 

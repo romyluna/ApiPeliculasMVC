@@ -7,7 +7,7 @@ using PeliculasWeb.Utilidades;
 
 namespace PeliculasWeb.Controllers
 {
-    
+    [Authorize]
     public class CategoriasController : Controller
     {
 

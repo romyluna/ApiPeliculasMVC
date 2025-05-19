@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using PeliculasWeb.Models.ViewModels;
+using Newtonsoft.Json;
 
 
 namespace PeliculasWeb.Controllers
@@ -29,19 +30,46 @@ namespace PeliculasWeb.Controllers
             _repoPelicula = repoPelicula;
         }
 
+        //Version 1 sin paginacion seria este codigo:
         //para la visualizacion del index(HOME) : trayendo peliculas y categorias en la vista de cualquier usuario.
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+        //    IndexVM listaPeliculasCategorias = new IndexVM()
+        //    {
+        //        ListaCategorias = (IEnumerable<Categoria>) await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi),
+        //        ListaPeliculas = (IEnumerable<Pelicula>)await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi),
+        //    };
+        //    return View(listaPeliculasCategorias);
+        //}
+
+        //con paginacion:
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 2)
         {
+            const int pageSize = 5; // O el tamaño de página que prefieras
+            var url = $"{CT.RutaPeliculasApi}?pageNumber={page}&pageSize={pageSize}";
+
+            var peliculaResponse = await _repoPelicula.GetPeliculasTodoAsync(url);
+
+            Console.WriteLine(JsonConvert.SerializeObject(peliculaResponse));
+
             IndexVM listaPeliculasCategorias = new IndexVM()
             {
-                ListaCategorias = (IEnumerable<Categoria>) await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi),
-                ListaPeliculas = (IEnumerable<Pelicula>)await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi),
+                ListaCategorias = (IEnumerable<Categoria>)await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi),
+                ListaPeliculas = peliculaResponse.Items,
+                TotalPages = peliculaResponse.TotalPages,
+                CurrentPage = page,
             };
+            //Console.WriteLine($"TotalPages: {peliculaResponse.TotalPages}, ItemsCount: {peliculaResponse.Items?.Count()}");
+
+
             return View(listaPeliculasCategorias);
         }
 
+
         //INDEX-CATEGORIA:con el desplegable de categorias cuando el usuario hace click se muestran las peliculas filtradas si toca terror muestra las pelis de terror y asi.
+
         [HttpGet]
         public async Task<IActionResult> IndexCategoria(int id)
         {

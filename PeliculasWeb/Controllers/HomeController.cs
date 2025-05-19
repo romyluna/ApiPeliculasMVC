@@ -41,6 +41,23 @@ namespace PeliculasWeb.Controllers
             return View(listaPeliculasCategorias);
         }
 
+        //INDEX-CATEGORIA:con el desplegable de categorias cuando el usuario hace click se muestran las peliculas filtradas si toca terror muestra las pelis de terror y asi.
+        [HttpGet]
+        public async Task<IActionResult> IndexCategoria(int id)
+        {
+            var pelisEnCategoria = await _repoPelicula.GetPeliculasEnCategoriaAsync(CT.RutaPeliculasEnCategoriaApi, id);
+            return View(pelisEnCategoria);
+        }
+
+
+        //INDEX-BUSQUEDA:con el desplegable de categorias cuando el usuario hace click se muestran las peliculas filtradas si toca terror muestra las pelis de terror y asi.
+        [HttpPost]
+        public async Task<IActionResult> IndexBusqueda(string nombre)
+        {
+            var pelisEncontradas = await _repoPelicula.Buscar(CT.RutaPeliculasBusquedaApi, nombre);
+            return View(pelisEncontradas);
+        }
+
         /*LOGIN*/
 
         [HttpGet]

@@ -45,7 +45,7 @@ namespace PeliculasWeb.Controllers
 
         //con paginacion:
         [HttpGet]
-        public async Task<IActionResult> Index(int page = 2)
+        public async Task<IActionResult> Index(int page = 1)
         {
             const int pageSize = 5; // O el tamaño de página que prefieras
             var url = $"{CT.RutaPeliculasApi}?pageNumber={page}&pageSize={pageSize}";

@@ -55,34 +55,24 @@ namespace PeliculasWeb.Repositorio
         /*CON PAGINACION*/
         public async Task<PeliculaResponse> GetPeliculasTodoAsync(string url)
         {
-            var peticion = new HttpRequestMessage(HttpMethod.Get, url); //creo una solicitud HTTP que le voy a enviar a la api SUMO EL ID PARA QUE SE PASE POR LA PETICION 
-
-            //envia la solicitud a la api
-
+            var peticion = new HttpRequestMessage(HttpMethod.Get, url);
             var cliente = _clientFactory.CreateClient();
-            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
-            //validar si se actualizo y retorna un boleano
+            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
 
             if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                //Para devolver la informacion que busca
-
-                var jsonString = await respuesta.Content.ReadAsStringAsync();//que lea el contenido
-
-                //deserealizar a PeliculaResponse
+                var jsonString = await respuesta.Content.ReadAsStringAsync();
+                // Deserializar a PeliculaResponse
                 var peliculaResponse = JsonConvert.DeserializeObject<PeliculaResponse>(jsonString);
-
-                //devolver la lista de peliculas
-                return peliculaResponse?? new PeliculaResponse();
-
+                // Devolver la lista de películas
+                return peliculaResponse ?? new PeliculaResponse();
             }
             else
             {
                 return new PeliculaResponse();
             }
         }
-
 
 
 

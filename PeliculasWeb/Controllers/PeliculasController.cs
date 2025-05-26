@@ -34,7 +34,12 @@ namespace PeliculasWeb.Controllers
         //aca con este metodo llamamos al metodo de la api para que la api nos traiga la informacion que necesitamos para el front-end
         public async Task<IActionResult> GetTodasPeliculas()
         {
-            return Json(new { data = await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi) }); //el get no es generico para peliculas (no gettodoasync)
+            //return Json(new { data = await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi) }); //el get no es generico para peliculas (no gettodoasync)
+
+            var peliculaResponse = await _repoPelicula.GetPeliculasTodoAsync(CT.RutaPeliculasApi);
+            return Json(new { data = peliculaResponse.Items });  // Solo la lista de películas
+
+
         }
 
 

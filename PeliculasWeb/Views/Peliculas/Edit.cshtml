@@ -24,9 +24,9 @@
     <!--para crear el formulario -->
     <div class="row">
         <div class="col-sm-12">
-                <form method="POST" asp-action="Update" enctype="multipart/form-data">                 
+                <form method="POST" asp-action="Update" enctype="multipart/form-data">
 
-                <!--para enviar el ID de la pelicula de manera oculta para que no se vea en el formulario-->
+                    <!--para enviar el ID de la pelicula de manera oculta para que no se vea en el formulario-->
 
                 <input type="hidden" asp-for="Pelicula.Id"/>
 
@@ -53,7 +53,7 @@
                 <div class="form-group row mb-3">
                     <label asp-for="Pelicula.Clasificacion" class="col-4 col-form-label"></label>
                     <div class="col-8">
-                        <Select asp-for="Pelicula.Clasificacion" asp-items="Html.GetEnumSelectList<Pelicula.TipoClasificacion>()" class=" ="form-control"></Select>
+                        <Select asp-for="Pelicula.Clasificacion" asp-items="Html.GetEnumSelectList<Pelicula.TipoClasificacion>()" class="form-control"></Select>
                     </div>
                 </div>
 
@@ -99,8 +99,10 @@
 
 
                 <div class="form-group row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary form-control">Editar Pelicula</button>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary form-control">
+                            Editar Pelicula
+                        </button>
                     </div>
 
                     <!--boton para ir atras-->

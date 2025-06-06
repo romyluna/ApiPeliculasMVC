@@ -172,49 +172,41 @@ namespace PeliculasWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Pelicula pelicula)
         {
-            //para crear una pelicula necesitamos asignarle una categoria:una lista desplegable con las categorias que hay.
-            IEnumerable<Categoria> ctList = (IEnumerable<Categoria>)await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi); //casteo ienumerable
+            IEnumerable<Categoria> ctList = (IEnumerable<Categoria>)await _repoCategoria.GetTodoAsync(CT.RutaCategoriasApi);
 
-            //PeliculasVM es un ViewModel que combina dos cosas: una lista de categorías (listaCategorias)
-            //para mostrar en un control desplegable y un objeto Pelicula que representa los datos de una película
-
-            PeliculasVM objVM = new PeliculasVM()
+            var objVM = new PeliculasVM()
             {
-
-                //traigo la lista de categorias aca:
-
                 ListaCategorias = ctList.Select(i => new SelectListItem
                 {
                     Text = i.Nombre,
                     Value = i.Id.ToString()
                 }),
-
-                //traigo los datos de pelicula
-                Pelicula = new Pelicula()
+                Pelicula = pelicula // Usar el objeto recibido en lugar de crear uno nuevo
             };
 
-            // Compruebo si el modelo recibido es válido según las validaciones definidas en el modelo Pelicula
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //con esto obtengo los archivos subidos desde el formulario 
-                var files = HttpContext.Request.Form.Files;
-                //si se ah subido algun archivo:
-                if (files.Count > 0)
-                {
-                    pelicula.Imagen = files[0];//asignar el iformFile directamente a la propiedad imagen
-                }
-                else
-                {
-                    // Si no se ha subido ningún archivo, retorno la vista con el ViewModel para que el usuario complete los datos
-                    return View(objVM);
-                }
-                //Llamo al repositorio para crear la película en la API correspondiente
-                await _repoPelicula.ActualizarPeliculaAsync(CT.RutaPeliculasApi + pelicula.Id, pelicula, HttpContext.Session.GetString("JWToken"));
-                // Redirigir al usuario a la acción Index después de crear exitosamente la película
-                return RedirectToAction(nameof(Index));
+                return View("Edit", objVM);
             }
-            // Si el modelo no es válido, retorno la vista con el ViewModel para que el usuario corrija los errores
-            return View(objVM);
+
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count > 0)
+            {
+                pelicula.Imagen = files[0];
+            }
+            else
+            {
+                // Obtener la película existente para mantener la imagen actual
+                var peliculaExistente = await _repoPelicula.GetAsync(CT.RutaPeliculasApi, pelicula.Id);
+                if (peliculaExistente != null)
+                {
+                    pelicula.RutaIMagen = peliculaExistente.RutaIMagen;
+                }
+            }
+
+            await _repoPelicula.ActualizarPeliculaAsync(CT.RutaPeliculasApi + pelicula.Id, pelicula, HttpContext.Session.GetString("JWToken"));
+            return RedirectToAction(nameof(Index));
+        
         }
 
 

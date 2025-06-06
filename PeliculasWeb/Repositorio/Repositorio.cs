@@ -94,16 +94,15 @@ namespace PeliculasWeb.Repositorio
                         {
                             //proceso de envio del archivo (no de subida porque eso lo hace la API)
                             var file = value as IFormFile;
-                            if (file !=null)
+                            if (file != null)
                             {
                                 var streamContent = new StreamContent(file.OpenReadStream());
-                                streamContent.Headers.ContentType = 
-                                    new System.Net.Http.Headers.MediaTypeHeaderValue("File.ContentType");
-                               
-                                //enviamos todo el contenido como multipartcontent
+                                streamContent.Headers.ContentType =
+                                    new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType); // Corregido aquí
 
-                                multipartContent.Add(streamContent,property.Name,file.FileName);
+                                multipartContent.Add(streamContent, property.Name, file.FileName);
                             }
+
                         }
                         else
                         {

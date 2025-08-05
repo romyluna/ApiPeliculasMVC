@@ -40,7 +40,7 @@
    - [Gestión de Películas (CRUD)](#gestión-de-películas-crud)
 7. [Búsqueda y Filtros de películas](#búsqueda-y-filtros-de-películas)
 8. [Notas finales](#notas-finales)
-9. [Contacto](#romina-olivera-luna)
+9. [Contacto](#contacto)
 
 ---
 

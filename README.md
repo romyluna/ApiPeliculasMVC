@@ -17,7 +17,7 @@
 ---
 
 ## ✨ Funcionalidades
-
+<a name="funcionalidades"></a>
 ✅ Listado de películas desde una API externa
 </br>
 ➕ Alta de nuevas películas manualmente
@@ -70,8 +70,9 @@ Asegurate de tener configurada la cadena de conexión a la base de datos en apps
 Ejecutá las migraciones para la base de datos (si estás usando EF Core):
 
 dotnet ef database update
+
 Iniciá la aplicación:
-dotnet run
+</br>dotnet run
 
 ---
 

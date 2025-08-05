@@ -45,7 +45,7 @@
 ---
 
 ## 🧰 Tecnologías utilizadas
-
+<a name="tecnologías-utilizadas"></a>
 - ASP.NET Core MVC
 - C#
 - Entity Framework
@@ -57,7 +57,7 @@
 ---
 
 ## 🚀 Cómo ejecutar el proyecto
-
+<a name="cómo-ejecutar-el-proyecto"></a>
 Cloná este repositorio:
    
 git clone https://github.com/tu-usuario/ApiPeliculasMVC.git
@@ -75,6 +75,7 @@ dotnet run
 ---
 
 ### 🖥 Pantalla principal
+<a name="pantalla-principal"></a>
 
 ![Pantalla principal](https://github.com/romyluna/ApiPeliculasMVC/blob/master/screenshots/pantalla_principal1.PNG?raw=true)
 
@@ -89,11 +90,11 @@ Pantalla de acceso para un usuario ya registrado:
 ![Login](https://github.com/romyluna/ApiPeliculasMVC/blob/master/screenshots/acceso_usuarios.png?raw=true)
 
 ## 👤 Funcionalidades para usuarios logueados (CRUD)
-
+<a name="funcionalidades-para-usuarios-logueados-crud"></a>
 📁 Gestión de Categorías
 
 ### 📋 Listado de Categorías
-
+<a name="listado-de-categorías"></a>
 El usuario puede ver todas las categorías existentes en el sistema.
 
 ![Listado de categorías](https://github.com/romyluna/ApiPeliculasMVC/blob/master/screenshots/categorias_listado.PNG?raw=true)
@@ -115,6 +116,7 @@ Desde la misma vista de listado, se puede modificar o eliminar una categoría ex
 ---
 
 ## 🎬 Gestión de Películas (CRUD)
+<a name="gestión-de-películas-crud"></a>
 
 Los usuarios logueados tienen acceso completo para administrar las películas del sistema. Esto incluye:
 
@@ -145,6 +147,7 @@ por ejemplo el editar se ve algo asi:
 
 ---
 ## 🔍🎬 Búsqueda y Filtros de peliculas
+<a name="búsqueda-y-filtros-de-películas"></a>
 
 Desde la pantalla principal (Inicio), el usuario puede:
 
@@ -164,6 +167,7 @@ Estas funciones están disponibles incluso sin iniciar sesión.
 
 ---
 ### 👩‍💻 Contacto
+<a name="contacto"></a>
 
 👩‍💻 Romina Olivera Luna
 </br>

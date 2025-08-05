@@ -179,6 +179,16 @@ Estas funciones están disponibles incluso sin iniciar sesión.
 
 [⬆️ Volver arriba](#readme)
 
+---
+
+© 2025 Romina Olivera Luna. Todos los derechos reservados.
+
+Este README fue redactado íntegramente por Romina Olivera Luna y no puede ser reproducido, copiado ni distribuido sin permiso explícito.
+
+El código fuente está licenciado bajo la Licencia MIT.  
+Para más detalles, ver el archivo [LICENSE](LICENSE).
+
+---
 
 
 

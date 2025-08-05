@@ -186,7 +186,7 @@ Estas funciones están disponibles incluso sin iniciar sesión.
 Este README fue redactado íntegramente por Romina Olivera Luna y no puede ser reproducido, copiado ni distribuido sin permiso explícito.
 
 El código fuente está licenciado bajo la Licencia MIT.  
-Para más detalles, ver el archivo [LICENSE](LICENSE).
+Para más detalles, ver el archivo [LICENSE](LICENSE.txt).
 
 ---
 
